@@ -2,8 +2,8 @@
 # Note: Changing this won't break anything
 name: continuous integration
 
-# On every push to any branch in the repo this yml file will do its thing
-on: push
+# On every push or pr to any branch in the repo this yml file will do its thing
+on: [push, pull_request]
 
 # Container for all work; without this keyword nothing will execute, as
 # a workflow needs at least one job
@@ -24,13 +24,14 @@ jobs:
       # This executes a shell command on the runner
         run: echo "Hello from the runner"
 
-      # This allows runner to see the code
+      # This allows runner to see the code. Without it, the machine is empty and
+      # mvn has nothing to build
       - uses: actions/checkout@v4
 
       #depending on whether above "uses" line is commented out, this will
       # show less or more of the files, more if it isn't commented out
-      - name: What's here?
-        run: ls -la
+#      - name: What's here?
+#        run: ls -la
 
       #Try to compile
       - name: Try to compile
@@ -39,13 +40,13 @@ jobs:
       # Add incorrect java version
       - uses: actions/setup-java@v4
         with:
-          java-version: '18'
+          java-version: '17'
           distribution: 'temurin'
 
       # See java & mvn version: Should output: openjdk version "17.0.20.1" 2026-08-18
       # and Apache Maven 3.9.16
-      - name: What java version?
-        run: java -version && mvn -version
+#      - name: What java version?
+#        run: java -version && mvn -version
 
       # add test
       - name: Mvn Test
