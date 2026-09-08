@@ -1,0 +1,25 @@
+# This is the name of the yml; display label for actions tab
+# Note: Changing this won't break anything
+name: continuous integration
+
+# On every push to any branch in the repo this yml file will do its thing
+on: push
+
+# Container for all work; without this keyword nothing will execute, as
+# a workflow needs at least one job
+jobs:
+
+  # Job ID. This name 'build' is a convention; it doesn't have to be named 'build'
+  build:
+
+    # GitHub uses a VM, and here we have that vm be ubuntu; latest version
+    # Note: This is required, becuz otherwise GH doesn't know what to run it on
+    runs-on: ubuntu-latest
+
+    # The ordered list of things this job does.
+    steps:
+      # Optional. Kinda the same as the one above
+      - name: Say hello
+
+      # This executes a shell command on the runner
+      - run: echo "Hello from the runner"
