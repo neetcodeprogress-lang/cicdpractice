@@ -27,5 +27,11 @@ jobs:
       # This allows runner to see the code
       - uses: actions/checkout@v4
 
+      #depending on whether above "uses" line is commented out, this will
+      # show less or more of the files, more if it isn't commented out
       - name: What's here?
         run: ls -la
+
+      #Try to compile
+      - name: Try to compile
+        run: mvn -B compile
