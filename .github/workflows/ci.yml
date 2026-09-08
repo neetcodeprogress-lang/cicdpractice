@@ -23,3 +23,9 @@ jobs:
 
       # This executes a shell command on the runner
       - run: echo "Hello from the runner"
+
+      # This allows runner to see the code
+      #- uses: actions/checkout@v4
+
+      - name: What's here?
+      - run: ls -la
