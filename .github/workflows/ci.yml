@@ -35,3 +35,7 @@ jobs:
       #Try to compile
       - name: Try to compile
         run: mvn -B compile
+
+      # See java version
+      - name: What java version?
+        run: java -version && mvn -version
