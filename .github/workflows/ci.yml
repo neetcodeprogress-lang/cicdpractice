@@ -22,10 +22,10 @@ jobs:
       - name: Say hello
 
       # This executes a shell command on the runner
-      - run: echo "Hello from the runner"
+        run: echo "Hello from the runner"
 
       # This allows runner to see the code
       - uses: actions/checkout@v4
 
       - name: What's here?
-      - run: ls -la
+        run: ls -la
