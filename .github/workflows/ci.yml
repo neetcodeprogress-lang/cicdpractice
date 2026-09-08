@@ -36,6 +36,14 @@ jobs:
       - name: Try to compile
         run: mvn -B compile
 
-      # See java version
+      # Add incorrect java version
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '18'
+          distribution: 'temurin
+
+      # See java & mvn version: Should output: openjdk version "17.0.20.1" 2026-08-18
+      # and Apache Maven 3.9.16
       - name: What java version?
         run: java -version && mvn -version
+
