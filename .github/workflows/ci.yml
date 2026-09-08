@@ -47,3 +47,7 @@ jobs:
       - name: What java version?
         run: java -version && mvn -version
 
+      # add test
+      - name: Mvn Test
+        run: mvn -B test
+
