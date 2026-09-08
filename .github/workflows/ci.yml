@@ -52,3 +52,4 @@ jobs:
       - name: Mvn Test
         run: mvn -B test
 
+      # Add a comment to show current state is successful / works
