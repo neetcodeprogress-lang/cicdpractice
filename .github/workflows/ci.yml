@@ -33,15 +33,17 @@ jobs:
 #      - name: What's here?
 #        run: ls -la
 
-      #Try to compile
-      - name: Try to compile
-        run: mvn -B compile
-
-      # Add incorrect java version
+      # Add java version
       - uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
+
+      #Try to compile
+#      - name: Try to compile
+#        run: mvn -B compile
+
+
 
       # See java & mvn version: Should output: openjdk version "17.0.20.1" 2026-08-18
       # and Apache Maven 3.9.16
