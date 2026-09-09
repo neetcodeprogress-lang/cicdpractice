@@ -49,6 +49,6 @@ jobs:
 #        run: java -version && mvn -version
 
       # add test
-      - name: Mvn Test
-        run: mvn -B test
+      - name: Mvn Verify (compile, test, lint, coverage gate)
+        run: mvn -B verify
 
