@@ -31,4 +31,9 @@ class CalculatorTest {
   void classifiesZero() {
     assertEquals("zero", calculator.classify(0));
   }
+
+  @Test
+  void describesAnExcellentScore() {
+    assertEquals("excellent", calculator.describe(95));
+  }
 }
