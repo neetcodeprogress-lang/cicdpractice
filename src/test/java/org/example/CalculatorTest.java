@@ -37,23 +37,23 @@ class CalculatorTest {
     assertEquals("excellent", calculator.describe(95));
   }
 
-   @Test
-   void describesGoodScore() {
-     assertEquals("good", calculator.describe(80));
-   }
+  @Test
+  void describesGoodScore() {
+    assertEquals("good", calculator.describe(80));
+  }
 
-   @Test
-   void describesPassingScore() {
-     assertEquals("pass", calculator.describe(65));
-   }
+  @Test
+  void describesPassingScore() {
+    assertEquals("pass", calculator.describe(65));
+  }
 
-   @Test
-   void describesFailingScore() {
-     assertEquals("fail", calculator.describe(30));
-   }
+  @Test
+  void describesFailingScore() {
+    assertEquals("fail", calculator.describe(30));
+  }
 
-   @Test
-   void rejectsNegativeScore() {
-     assertThrows(IllegalArgumentException.class, () -> calculator.describe(-1));
-   }
+  @Test
+  void rejectsNegativeScore() {
+    assertThrows(IllegalArgumentException.class, () -> calculator.describe(-1));
+  }
 }
