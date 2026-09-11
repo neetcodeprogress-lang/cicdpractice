@@ -73,7 +73,7 @@ public class Calculator {
   //      return "fail";
   //    }
 
-  //badly formatted example
+   //badly formatted example
   public String describe(int score) {
     if (score < 0) {throw new IllegalArgumentException("score must not be negative");}
     if (score >= 90) {return "excellent";}
