@@ -48,4 +48,45 @@ public class Calculator {
     }
     return b;
   }
+
+  /**
+   * Describes a score band.
+   *
+   * @param score the score, which must not be negative
+   * @return a word describing the band
+   */
+
+  //better formatted example
+  //    public String describe(int score) {
+  //      if (score < 0) {
+  //        throw new IllegalArgumentException("score must not be negative");
+  //      }
+  //      if (score >= 90) {
+  //        return "excellent";
+  //      }
+  //      if (score >= 75) {
+  //        return "good";
+  //      }
+  //      if (score >= 60) {
+  //        return "pass";
+  //      }
+  //      return "fail";
+  //    }
+
+  //badly formatted example
+  public String describe(int score) {
+    if (score < 0) {
+      throw new IllegalArgumentException("score must not be negative");
+    }
+    if (score >= 90) {
+      return "excellent";
+    }
+    if (score >= 75) {
+      return "good";
+    }
+    if (score >= 60) {
+      return "pass";
+    }
+    return "fail";
+  }
 }
