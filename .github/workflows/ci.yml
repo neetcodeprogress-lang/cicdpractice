@@ -2,8 +2,12 @@
 # Note: Changing this won't break anything
 name: continuous integration
 
-# On every push or pr to any branch in the repo this yml file will do its thing
-on: [push, pull_request]
+# Pull requests only. A PR build already tests the branch's newest commit, so
+# the old [push, pull_request] pair ran the identical build twice per commit.
+# workflow_dispatch adds a "Run workflow" button, which is handy for a demo.
+on:
+  pull_request:
+  workflow_dispatch:
 
 # Container for all work; without this keyword nothing will execute, as
 # a workflow needs at least one job
@@ -16,42 +20,69 @@ jobs:
     # Note: This is required, becuz otherwise GH doesn't know what to run it on
     runs-on: ubuntu-latest
 
-    # The ordered list of things this job does.
+    # The ordered list of things this job does. Every step is its own collapsible
+    # line in the Actions tab, so one step per gate means the run page tells you
+    # which gate failed before you open a single log.
     steps:
-      # Optional. Kinda the same as the one above
-      - name: Say hello
-
-      # This executes a shell command on the runner
-        run: echo "Hello from the runner"
 
       # This allows runner to see the code. Without it, the machine is empty and
       # mvn has nothing to build
-      - uses: actions/checkout@v4
+      - name: Check out the code
+        uses: actions/checkout@v4
 
-      #depending on whether above "uses" line is commented out, this will
-      # show less or more of the files, more if it isn't commented out
-#      - name: What's here?
-#        run: ls -la
-#
-      # Add java version
-      - uses: actions/setup-java@v4
+      # Add java version. 'cache: maven' reuses ~/.m2 across runs, so the four
+      # mvn steps below do not re-download the same jars four times.
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: maven
 
-      #Try to compile
-#      - name: Try to compile
-#        run: mvn -B compile
+      # GATE 1 from pom.xml. Checkstyle is bound to 'validate', which every mvn
+      # phase below would trigger again; -Dcheckstyle.skip on those keeps the
+      # lint result attached to this one step.
+      - name: Lint (checkstyle)
+        run: mvn -B checkstyle:check
 
+      # Compile only. A red X here is a compiler error, never a test failure.
+      - name: Compile
+        run: mvn -B -Dcheckstyle.skip=true compile
 
+      # Surefire runs the JUnit tests. Jacoco's 'report' execution is bound to
+      # this same 'test' phase, so target/site/jacoco is written here too.
+      - name: Run unit tests
+        run: mvn -B -Dcheckstyle.skip=true test
 
-      # See java & mvn version: Should output: openjdk version "17.0.20.1" 2026-08-18
-      # and Apache Maven 3.9.16
-#      - name: What java version?
-#        run: java -version && mvn -version
+      # GATE 2 from pom.xml: jacoco:check enforces jacoco.line.minimum at
+      # 'verify'. -DskipTests reuses the target/jacoco.exec the previous step
+      # just wrote instead of running the whole suite a second time.
+      - name: Package and enforce the coverage gate
+        run: mvn -B -Dcheckstyle.skip=true -DskipTests verify
 
-      # add test
-      - name: Mvn Verify (compile, test, lint, coverage gate)
-        run: mvn -B verify
+      # Prints the coverage number on the run's summary page, so nobody has to
+      # download a report to see where the build landed against the floor.
+      - name: Report coverage on the summary page
+        if: always()
+        run: |
+          if [ -f target/site/jacoco/jacoco.csv ]; then
+            awk -F, 'NR>1 {miss+=$8; cov+=$9} END {
+              if (miss+cov > 0)
+                printf "Line coverage: %.1f%% (%d of %d lines), floor is 50%%\n", 100*cov/(miss+cov), cov, miss+cov
+            }' target/site/jacoco/jacoco.csv >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No jacoco report was produced." >> "$GITHUB_STEP_SUMMARY"
+          fi
 
-      # Add a comment to show current state is successful / works
+      # 'if: always()' so the reports still upload when a gate fails, which is
+      # exactly when you want to read them.
+      - name: Upload the reports and the jar
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: |
+            target/*.jar
+            target/surefire-reports/
+            target/site/jacoco/
+            target/checkstyle-result.xml
