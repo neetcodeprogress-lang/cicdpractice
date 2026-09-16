@@ -14,7 +14,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>17</maven.compiler.release>
     <!-- The coverage floor. Set just under where we actually land, so a bad PR can fall below it. -->
-    <jacoco.line.minimum>0.50</jacoco.line.minimum>
+    <jacoco.line.minimum>0.80</jacoco.line.minimum>
   </properties>
 
   <dependencies>

@@ -36,27 +36,11 @@ public class Calculator {
   }
 
   /**
-   * Returns the larger of two numbers.
-   *
-   * @param a the first number
-   * @param b the second number
-   * @return the larger of the two
-   */
-  public int max(int a, int b) {
-    if (a > b) {
-      return a;
-    }
-    return b;
-  }
-
-  /**
    * Describes a score band.
    *
    * @param score the score, which must not be negative
    * @return a word describing the band
    */
-
-  //badly formatted example
   public String describe(int score) {
     if (score < 0) {
       throw new IllegalArgumentException("score must not be negative");
