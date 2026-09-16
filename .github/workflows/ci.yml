@@ -1,5 +1,5 @@
 # Display label for the Actions tab. Changing it does not break anything.
-name: continuous integration
+name: ci.yml
 
 # Pull requests only. A PR build already tests the branch's newest commit, so
 # the old [push, pull_request] pair ran the identical build twice per commit.
