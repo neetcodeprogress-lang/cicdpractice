@@ -39,7 +39,7 @@ class CalculatorTest {
 
   @Test
   void describesGoodScore() {
-    assertEquals("fail", calculator.describe(80));
+    assertEquals("good", calculator.describe(80));
   }
 
   @Test
