@@ -8,12 +8,12 @@
 #      carrying a compiler and a full ~/.m2 cache that a running app never uses.
 #      That is the IMAGE SIZE problem.
 
-FROM maven:3.9-eclipse-temurin-17
-WORKDIR /app
-COPY . .
-RUN mvn package
-EXPOSE 8080
-CMD ["java", "-jar", "target/asdf-1.0-SNAPSHOT.jar"]
+#FROM maven:3.9-eclipse-temurin-17
+#WORKDIR /app
+#COPY . .
+#RUN mvn package
+#EXPOSE 8080
+#CMD ["java", "-jar", "target/asdf-1.0-SNAPSHOT.jar"]
 
 
 # Below is the correct version

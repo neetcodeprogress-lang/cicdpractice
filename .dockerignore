@@ -15,3 +15,7 @@ target/
 # The build recipes themselves are not needed inside the image.
 Dockerfile*
 .dockerignore
+
+# Local secrets. Don't want these to go into an image.
+.env
+.env.example
