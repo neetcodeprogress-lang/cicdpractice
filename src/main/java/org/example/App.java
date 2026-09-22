@@ -1,16 +1,20 @@
 package org.example;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 /**
  * Entry point for the demo application.
  */
+@SpringBootApplication
 public class App {
 
   /**
-   * Prints a greeting.
+   * Starts the application.
    *
    * @param args command line arguments, unused
    */
   public static void main(String[] args) {
-    System.out.println("Hello World!");
+    SpringApplication.run(App.class, args);
   }
 }

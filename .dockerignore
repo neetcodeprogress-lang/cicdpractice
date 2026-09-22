@@ -1,0 +1,17 @@
+# Everything listed here is invisible to COPY, so it never enters the image
+# and never invalidates a cached layer by changing.
+
+# Build output. Rebuilt inside the image anyway, and 20 MB of it.
+target/
+
+# History. Changes on every commit, which would bust the cache constantly.
+.git/
+.github/
+
+# IDE state.
+.idea/
+*.iml
+
+# The build recipes themselves are not needed inside the image.
+Dockerfile*
+.dockerignore
